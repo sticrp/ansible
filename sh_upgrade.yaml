@@ -1,6 +1,6 @@
 ---
 - name: Atualizar pacotes no servidor Ubuntu
-  hosts: seu_servidor_ubuntu
+  hosts: all
   become: yes  # Executar com privilégios de superusuário
 
   tasks:
