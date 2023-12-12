@@ -1,0 +1,8 @@
+---
+- name: Atualizar pacotes no servidor Ubuntu
+  hosts: seu_servidor_ubuntu
+  become: yes  # Executar com privilégios de superusuário
+
+  tasks:
+    - name: Executar sudo apt upgrade
+      command: sudo apt upgrade -y
