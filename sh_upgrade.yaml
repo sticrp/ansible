@@ -9,4 +9,4 @@
       shell: while pgrep unattended; do sleep 10; done;
     
     - name: Executar sudo apt upgrade
-      action: command /usr/bin/apt upgrade -y
+      action: sudo -s
