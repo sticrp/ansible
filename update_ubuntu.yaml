@@ -19,5 +19,10 @@
         force_apt_get: yes
         force: yes
         install_recommends: yes
+
+    - name: Remove dependencies that are no longer required and purge their configuration files
+        ansible.builtin.apt:
+        autoremove: yes
+        purge: true 
         
         
