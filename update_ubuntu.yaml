@@ -15,3 +15,9 @@
         upgrade: dist
         autoremove: yes
         autoclean: yes
+        allow_unauthenticated: yes
+        force_apt_get: yes
+        force: yes
+        install_recommends: yes
+        
+        
