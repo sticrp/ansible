@@ -8,12 +8,11 @@
 
     - name: Atualizar todos os pacotes
       apt:
+        update_cache: yes
         upgrade: dist
         autoremove: yes
         autoclean: yes
         allow_unauthenticated: yes
         force_apt_get: yes
-        install_recommends: yes
-
-        
+        install_recommends: yes   
         
