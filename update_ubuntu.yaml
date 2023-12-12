@@ -21,7 +21,7 @@
         install_recommends: yes
 
     - name: Remove dependencies that are no longer required and purge their configuration files
-        ansible.builtin.apt:
+      apt:
         autoremove: yes
         purge: true 
         
