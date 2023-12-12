@@ -2,9 +2,6 @@
 - name: Atualizar servidores Ubuntu
   hosts: all
   become: yes
-  become_user: ansible
-  become_password: grayskull787cpdcrpweb
-  become_method: sudo
   gather_facts: yes
 
   tasks:
