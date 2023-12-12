@@ -20,7 +20,7 @@
         force: yes
         install_recommends: yes
 
-    - name: Remove dependencies that are no longer required and purge their configuration files
+    - name: Remove pacotes nao mais usados pelo sistema
       apt:
         autoremove: yes
         purge: true 
