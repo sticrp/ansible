@@ -3,6 +3,8 @@
   hosts: all
   become: yes
   become_user: ansible
+  become_method: su
+  become_exe: sudo su -
   gather_facts: yes
 
   tasks:
