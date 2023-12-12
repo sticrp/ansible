@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   become_user: ansible
-  become_flags: '-s /bin/sh'
+  become_method: sudo
   gather_facts: yes
 
   tasks:
