@@ -1,7 +1,7 @@
 ---
 - name: Atualizar servidores CentOS
   hosts:  all
-  become: yes
+  #become: yes
   gather_facts: yes
 
   tasks:
