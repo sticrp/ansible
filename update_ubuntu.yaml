@@ -2,8 +2,6 @@
 - name: Atualizar servidores Ubuntu
   hosts: all
   become: yes
-  become_method: su
-  become_user: root
   gather_facts: yes
 
   tasks:
