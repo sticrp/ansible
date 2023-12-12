@@ -5,9 +5,6 @@
   gather_facts: yes
 
   tasks:
-    - name: Atualizar lista de pacotes
-      apt:
-        update_cache: yes
 
     - name: Atualizar todos os pacotes
       apt:
@@ -19,9 +16,5 @@
         force: yes
         install_recommends: yes
 
-    - name: Remove pacotes nao mais usados pelo sistema
-      apt:
-        autoremove: yes
-        purge: true 
         
         
