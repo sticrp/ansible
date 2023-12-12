@@ -1,6 +1,7 @@
 ---
 - name: Atualizar servidores Ubuntu
   hosts: all
+  sudo: yes
   become: yes
   gather_facts: yes
 
