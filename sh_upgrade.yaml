@@ -5,4 +5,4 @@
 
   tasks:
     - name: Executar sudo apt upgrade
-      command: "sudo apt upgrade -y"
+      command: apt-get upgrade -y
