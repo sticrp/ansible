@@ -8,7 +8,6 @@
 
     - name: Atualizar todos os pacotes
       apt:
-        update_cache: yes
         upgrade: dist
         autoremove: yes
         autoclean: yes
