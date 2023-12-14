@@ -9,6 +9,7 @@
     - name: Atualizar todos os pacotes
       apt:
         upgrade: dist
+        clean: yes
         autoremove: yes
         autoclean: yes
         allow_unauthenticated: yes
