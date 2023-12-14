@@ -15,4 +15,13 @@
         allow_unauthenticated: yes
         force_apt_get: yes
         install_recommends: yes   
+
+   - name: Verifica se e necessario reiniciar
+     stat:
+       path: /var/run/reboot-required
+     register: reboot_required_file
+   
+   - name: Reinicia se for necessario
+     reboot:
+       when: reboot_required_file.stat.exists == true       
         
