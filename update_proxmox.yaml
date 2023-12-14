@@ -8,7 +8,7 @@
       apt:
         clean: yes # Realizar atualização com dist-upgrade
         update_cache: yes  # Atualizar cache dos pacotes
-        upgrade: dist 
+        upgrade: yes 
         autoremove: yes
         autoclean: yes
         allow_unauthenticated: yes
