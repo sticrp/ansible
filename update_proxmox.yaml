@@ -9,5 +9,5 @@
          update_cache: yes  # Atualizar cache dos pacotes
         
     - name: Atualizar pacotes 
-      command: apt-get dist-upgrade -y --ignore-missing
+      command: apt-get upgrade -y
         
