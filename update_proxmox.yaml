@@ -6,9 +6,9 @@
   tasks:
     - name: Atualizar pacotes com dist-upgrade
       apt:
+        clean: yes # Realizar atualização com dist-upgrade
         update_cache: yes  # Atualizar cache dos pacotes
         upgrade: dist 
-        clean: yes # Realizar atualização com dist-upgrade
         autoremove: yes
         autoclean: yes
         allow_unauthenticated: yes
