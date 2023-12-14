@@ -6,6 +6,7 @@
   tasks:
     - name: Atualizar pacotes com dist-upgrade
       apt:
+        ignore_errors: yes
         clean: yes # Realizar atualização com dist-upgrade
         update_cache: yes  # Atualizar cache dos pacotes
         upgrade: dist 
