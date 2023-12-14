@@ -8,8 +8,8 @@
       apt:
         update_cache: yes  # Atualizar cache dos pacotes
         upgrade: yes 
-        autoremove: yes
+        #autoremove: yes
         autoclean: yes
         allow_unauthenticated: yes
         force_apt_get: yes
-        install_recommends: yes
+        #install_recommends: yes
