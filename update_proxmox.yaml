@@ -1,15 +1,13 @@
 ---
-- name: Atualizar pacotes no Proxmox com dist-upgrade
+- name: Atualizar pacotes no Proxmox 
   hosts: all
   become: yes  # Executar com privilégios de superusuário
 
   tasks:
-    - name: Atualizar pacotes com dist-upgrade
+    - name: Atualizar lista de pacotes
       apt:
-        update_cache: yes  # Atualizar cache dos pacotes
-        upgrade: yes 
-        #autoremove: yes
-        autoclean: yes
-        allow_unauthenticated: yes
-        force_apt_get: yes
-        #install_recommends: yes
+         update_cache: yes  # Atualizar cache dos pacotes
+        
+    - name: Atualizar pacotes 
+      command: apt-get dist-upgrade -y --ignore-missing
+        
