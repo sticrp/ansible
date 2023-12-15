@@ -5,4 +5,4 @@
 
   tasks:
     - name: Reiniciar bridges
-     command: reboot
+      command: reboot
