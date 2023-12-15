@@ -1,0 +1,8 @@
+---
+- name: Reiniciar bridges WIFI
+  hosts: all
+  become: yes  # Executar com privilégios de superusuário
+
+  tasks:
+    - name: Reiniciar bridges
+     command: reboot
