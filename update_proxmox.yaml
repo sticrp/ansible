@@ -10,4 +10,13 @@
         
     - name: Atualizar pacotes 
       command: apt-get upgrade -y
+
+    - name: Verifica se é necessario reiniciar
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+     
+    - name: Reinicia se for necessario
+      reboot:
+      when: reboot_required_file.stat.exists == true and reboot_required_file.stat.isreg == true
         
