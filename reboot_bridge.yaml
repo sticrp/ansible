@@ -4,5 +4,9 @@
   become: yes  # Executar com privilégios de superusuário
 
   tasks:
+    - name: /tmp/ansible/ directory exists with 0777 permission
+      file: path=/tmp/ansible/ owner=root group=root mode=0777 recurse=no state=directory
+      sudo: yes
+  
     - name: Reiniciar bridges
       command: reboot
