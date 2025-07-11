@@ -1,44 +1,25 @@
-# playbooks/update_mikrotik_pkg_update.yml
-- name: Atualizar RouterOS pelo repositório interno
+- name: Atualizar RouterOS usando repositório interno (via SSH)
   hosts: all
   gather_facts: no
   connection: ssh
   vars:
-    # opcional: canal de atualização (release ou long-term)
     update_channel: "stable"
     wait_after_reboot: 120
 
   tasks:
-    - name: (Opcional) Ajustar canal de atualização
-      ansible.builtin.command: >
-        /system package update set channel={{ update_channel }}
-      when: update_channel is defined
+    - name: (Opcional) Definir canal de atualização
+      ansible.builtin.raw: /system package update set channel={{ update_channel }}
 
-    - name: Mostrar informações do pacote de atualização
-      ansible.builtin.command: /system package update print
-      register: info_update
+    - name: Verificar pacotes disponíveis
+      ansible.builtin.raw: /system package update print
 
-    - name: Exibir canal/versão disponível
-      ansible.builtin.debug:
-        var: info_update.stdout_lines
+    - name: Baixar atualização
+      ansible.builtin.raw: /system package update download
 
-    - name: Fazer download dos pacotes
-      ansible.builtin.command: /system package update download
-      register: download_result
+    - name: Instalar atualização
+      ansible.builtin.raw: /system package update install
 
-    - name: Mostrar resultado do download
-      ansible.builtin.debug:
-        var: download_result.stdout_lines
-
-    - name: Instalar pacote e agendar reboot
-      ansible.builtin.command: /system package update install
-      register: install_result
-
-    - name: Mostrar saída da instalação
-      ansible.builtin.debug:
-        var: install_result.stdout_lines
-
-    - name: Aguardar Mikrotik reiniciar e SSH voltar
+    - name: Aguardar router reiniciar e SSH voltar
       ansible.builtin.wait_for:
         host: "{{ ansible_host }}"
         port: "{{ ansible_port }}"
@@ -46,10 +27,5 @@
         timeout: "{{ wait_after_reboot }}"
         state: started
 
-    - name: Confirmar versão após reboot
-      ansible.builtin.command: /system resource print
-      register: new_version
-
-    - name: Exibir nova versão do RouterOS
-      ansible.builtin.debug:
-        var: new_version.stdout_lines
+    - name: Verificar versão após reboot
+      ansible.builtin.raw: /system resource print
