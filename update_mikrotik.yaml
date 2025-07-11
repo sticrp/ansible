@@ -5,7 +5,7 @@
   connection: ssh
   vars:
     # opcional: canal de atualização (release ou long-term)
-    update_channel: "release"
+    update_channel: "stable"
     wait_after_reboot: 120
 
   tasks:
@@ -41,7 +41,7 @@
     - name: Aguardar Mikrotik reiniciar e SSH voltar
       ansible.builtin.wait_for:
         host: "{{ ansible_host }}"
-        port: 22
+        port: "{{ ansible_port }}"
         delay: 10
         timeout: "{{ wait_after_reboot }}"
         state: started
