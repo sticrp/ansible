@@ -1,6 +1,6 @@
 # playbooks/update_mikrotik_pkg_update.yml
 - name: Atualizar RouterOS pelo repositório interno
-  hosts: mikrotik
+  hosts: all
   gather_facts: no
   connection: ssh
   vars:
