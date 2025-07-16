@@ -1,7 +1,7 @@
 - name: Atualizar RouterOS via network_cli
   hosts: all
   gather_facts: no
-  check_mode: no       # Garante que o play rodará no modo normal
+  check_mode: no
 
   tasks:
     - name: Verificar pacotes disponíveis
