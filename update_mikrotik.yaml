@@ -10,14 +10,21 @@
     - name: (Opcional) Definir canal de atualização
       ansible.builtin.raw: /system package update set channel={{ update_channel }}
 
-    - name: Verificar pacotes disponíveis
+    - name: Verificar pacotes disponíveis e registrar saída
       ansible.builtin.raw: /system package update print
+      register: update_status
+
+    - name: Exibir status da atualização (para depuração)
+      ansible.builtin.debug:
+        var: update_status.stdout_lines
 
     - name: Baixar atualização
       ansible.builtin.raw: /system package update download
+      when: "'New version available' in update_status.stdout" # Condição para baixar
 
     - name: Instalar atualização
       ansible.builtin.raw: /system package update install
+      when: "'New version available' in update_status.stdout" # Condição para instalar
 
     - name: Aguardar router reiniciar e SSH voltar
       ansible.builtin.wait_for:
@@ -26,6 +33,7 @@
         delay: 10
         timeout: "{{ wait_after_reboot }}"
         state: started
+      when: "'New version available' in update_status.stdout" # Aguarda reinício apenas se houve atualização
 
     - name: Verificar versão após reboot
       ansible.builtin.raw: /system resource print
