@@ -1,5 +1,5 @@
 - name: Atualizar RouterOS usando SSH via Semaphore
-  hosts: mikrotiks
+  hosts: all
   gather_facts: no
   connection: ssh
 
