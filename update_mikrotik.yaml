@@ -13,6 +13,8 @@
     - name: Verificar pacotes disponíveis e registrar saída
       ansible.builtin.raw: /system package update print
       register: update_status
+      failed_when: false  # <- NÃO falhar se o comando retornar código de saída inesperado
+      changed_when: false # <- NÃO marcar como "changed", pois é só leitura
 
     - name: Exibir status da atualização (para depuração)
       ansible.builtin.debug:
@@ -20,11 +22,12 @@
 
     - name: Baixar atualização
       ansible.builtin.raw: /system package update download
-      when: "'New version available' in update_status.stdout" # Condição para baixar
+      when: "'New version is available' in update_status.stdout"
+      # Dica: cheque exatamente o texto que aparece no seu RouterOS
 
     - name: Instalar atualização
       ansible.builtin.raw: /system package update install
-      when: "'New version available' in update_status.stdout" # Condição para instalar
+      when: "'New version is available' in update_status.stdout"
 
     - name: Aguardar router reiniciar e SSH voltar
       ansible.builtin.wait_for:
@@ -33,7 +36,7 @@
         delay: 10
         timeout: "{{ wait_after_reboot }}"
         state: started
-      when: "'New version available' in update_status.stdout" # Aguarda reinício apenas se houve atualização
+      when: "'New version is available' in update_status.stdout"
 
     - name: Verificar versão após reboot
       ansible.builtin.raw: /system resource print
