@@ -25,20 +25,21 @@
 
     - name: Baixar atualização
       ansible.builtin.raw: /system package update download
-      when: "'New version is available' in update_status.stdout"
+      when: update_status.stdout is defined and 'New version is available' in update_status.stdout
 
     - name: Instalar atualização
       ansible.builtin.raw: /system package update install
-      when: "'New version is available' in update_status.stdout"
+      when: update_status.stdout is defined and 'New version is available' in update_status.stdout
 
-    - name: Aguardar router reiniciar
+    - name: Aguardar router reiniciar e SSH voltar
       ansible.builtin.wait_for:
         host: "{{ ansible_host }}"
         port: "{{ ansible_port }}"
         delay: 10
         timeout: "{{ wait_after_reboot }}"
         state: started
-      when: "'New version is available' in update_status.stdout"
+      when: update_status.stdout is defined and 'New version is available' in update_status.stdout
+
 
     - name: Verificar versão após reboot
       ansible.builtin.raw: /system resource print
