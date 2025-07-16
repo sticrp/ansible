@@ -1,3 +1,4 @@
+---
 - name: Atualizar RouterOS via network_cli
   hosts: all
   gather_facts: no
