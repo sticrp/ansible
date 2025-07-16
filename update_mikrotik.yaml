@@ -10,7 +10,7 @@
         command: /system package update print
       register: update_status
 
-    - name: Debug: mostrar status da atualização
+    - name: Debug mostrar status da atualização
       debug:
         var: update_status.stdout
 
