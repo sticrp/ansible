@@ -1,45 +1,44 @@
-- name: Atualizar RouterOS usando repositório interno (via SSH)
-  hosts: all
+- name: Atualizar RouterOS usando SSH via Semaphore
+  hosts: mikrotiks
   gather_facts: no
   connection: ssh
+
   vars:
     update_channel: "stable"
     wait_after_reboot: 120
 
   tasks:
-    - name: Definir canal de atualização
+    - name: (1) Definir canal de atualização
       ansible.builtin.raw: /system package update set channel={{ update_channel }}
       register: set_channel
       failed_when: false
-      changed_when: false
 
-    - name: Verificar pacotes disponíveis e registrar saída
+    - name: (2) Verificar pacotes disponíveis e registrar saída
       ansible.builtin.raw: /system package update print
       register: update_status
       failed_when: false
-      changed_when: false
 
-    - name: Debug saída
+    - name: (3) Debug saída bruta
       ansible.builtin.debug:
-        var: update_status.stdout_lines
+        var: update_status
 
-    - name: Baixar atualização
+    - name: (4) Baixar atualização
       ansible.builtin.raw: /system package update download
-      when: update_status.stdout is defined and 'New version is available' in update_status.stdout
+      when: update_status.stdout is defined and "'New version is available' in update_status.stdout"
 
-    - name: Instalar atualização
+    - name: (5) Instalar atualização
       ansible.builtin.raw: /system package update install
-      when: update_status.stdout is defined and 'New version is available' in update_status.stdout
+      when: update_status.stdout is defined and "'New version is available' in update_status.stdout"
 
-    - name: Aguardar router reiniciar e SSH voltar
+    - name: (6) Esperar router reiniciar
       ansible.builtin.wait_for:
         host: "{{ ansible_host }}"
-        port: "{{ ansible_port }}"
+        port: "{{ ansible_port | default(22) }}"
         delay: 10
         timeout: "{{ wait_after_reboot }}"
         state: started
-      when: update_status.stdout is defined and 'New version is available' in update_status.stdout
+      when: update_status.stdout is defined and "'New version is available' in update_status.stdout"
 
-
-    - name: Verificar versão após reboot
+    - name: (7) Verificar versão após reboot
       ansible.builtin.raw: /system resource print
+      failed_when: false
