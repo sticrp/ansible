@@ -1,29 +1,30 @@
 ---
-- name: MikroTik RouterOS Upgrade via network_cli
+- name: Atualizar RouterOS via network_cli
   hosts: all
   gather_facts: no
+  check_mode: no       # Garante que o play rodará no modo normal
 
   tasks:
-    - name: (1) Verificar pacotes disponíveis
+    - name: Verificar pacotes disponíveis
       ansible.netcommon.cli_command:
         command: /system package update print
       register: update_status
 
-    - name: Debug saída
+    - name: Debug: mostrar status da atualização
       debug:
         var: update_status.stdout
 
-    - name: (2) Baixar atualização
+    - name: Baixar atualização (se disponível)
       ansible.netcommon.cli_command:
         command: /system package update download
       when: "'New version is available' in update_status.stdout"
 
-    - name: (3) Instalar atualização
+    - name: Instalar atualização (se disponível)
       ansible.netcommon.cli_command:
         command: /system package update install
       when: "'New version is available' in update_status.stdout"
 
-    - name: (4) Esperar router reiniciar
+    - name: Esperar router reiniciar após instalação
       ansible.builtin.wait_for:
         host: "{{ inventory_hostname }}"
         port: "{{ ansible_port }}"
@@ -32,6 +33,6 @@
         state: started
       when: "'New version is available' in update_status.stdout"
 
-    - name: (5) Verificar versão após reboot
+    - name: Verificar versão após reboot
       ansible.netcommon.cli_command:
         command: /system resource print
