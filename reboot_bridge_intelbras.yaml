@@ -27,4 +27,4 @@
 
     - name: Mostrar resultado
       debug:
-        var: reboot_result.stdout_lines
+        var: reboot_result
