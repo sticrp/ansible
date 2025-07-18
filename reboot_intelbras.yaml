@@ -6,8 +6,6 @@
   become: no
 
   tasks:
-    - name: Rebootar AP
-      ansible.builtin.raw: "sleep 2 && reboot"
-      async: 1
-      poll: 0
-      ignore_errors: true
+  - name: Rebootar AP via comando direto
+    ansible.builtin.raw: reboot
+    ignore_errors: yes
