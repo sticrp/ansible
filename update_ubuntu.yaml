@@ -1,5 +1,5 @@
 ---
-- name: Atualizar servidores Ubuntu
+- name: Atualizar servidores Ubuntu/Debian
   hosts: all
   become: yes
   gather_facts: yes
