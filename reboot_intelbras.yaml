@@ -8,7 +8,7 @@
       ansible.builtin.expect:
         command: ssh admin@{{ inventory_hostname }}
         responses:
-          'password:': {{ ansible_pass }}
+          'password:': "{{ ansible_pass }}"
           '.*#': "reboot"
         timeout: 10
       vars:
