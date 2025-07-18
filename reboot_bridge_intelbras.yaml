@@ -1,30 +1,26 @@
----
 - name: Reboot Bridge Intelbras
   hosts: all
   gather_facts: no
   vars:
+    ansible_user: admin
+    ansible_password: sua_senha
     ansible_ssh_common_args: >
-      -o KexAlgorithms=+diffie-hellman-group1-sha1
-      -o HostKeyAlgorithms=+ssh-rsa
-      -o PubkeyAcceptedKeyTypes=+ssh-rsa
       -o StrictHostKeyChecking=no
       -o UserKnownHostsFile=/dev/null
-
+      -o HostKeyAlgorithms=+ssh-rsa
+      -o PubkeyAcceptedKeyTypes=+ssh-rsa
+      -o KexAlgorithms=+diffie-hellman-group14-sha1
   tasks:
-    - name: Reboot via sshpass
-      shell: |
-        sshpass -p '{{ ansible_password }}' ssh \
-          -o KexAlgorithms=+diffie-hellman-group1-sha1 \
-          -o HostKeyAlgorithms=+ssh-rsa \
-          -o PubkeyAcceptedKeyTypes=+ssh-rsa \
-          -o StrictHostKeyChecking=no \
-          -o UserKnownHostsFile=/dev/null \
-          {{ ansible_user }}@{{ inventory_hostname }} 'reboot'
-      args:
-        warn: false
+    - name: Reboot usando comando raw
+      raw: reboot
       register: reboot_result
-      failed_when: false
+      ignore_errors: yes
 
-    - name: Mostrar resultado
+    - name: Verificar resultado
       debug:
-        var: reboot_result
+        msg: >
+          {% if reboot_result.rc == 0 %}
+            Reboot enviado com sucesso para {{ inventory_hostname }}
+          {% else %}
+            Falha ao tentar reiniciar {{ inventory_hostname }}. Detalhes: {{ reboot_result }}
+          {% endif %}
