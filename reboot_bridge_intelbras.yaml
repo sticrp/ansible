@@ -2,8 +2,8 @@
   hosts: all
   gather_facts: no
   vars:
-    ansible_user: admin
-    ansible_password: sua_senha
+    ansible_user: "{{ ansible_user }}"
+    ansible_password: "{{ ansible_password }}"
     ansible_ssh_common_args: >
       -o StrictHostKeyChecking=no
       -o UserKnownHostsFile=/dev/null
