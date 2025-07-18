@@ -5,6 +5,6 @@
   tasks:
     - name: Executar reboot_bridge_ruckus.py
       ansible.builtin.command: >
-        python3 reboot_bridge_ruckus.py {{ inventory_hostname }} {{ ansible_user }} {{ ansible_password }}
+         /opt/semaphore/apps/ansible/11.1.0/venv/bin/python3 reboot_ruckus.py {{ inventory_hostname }} {{ ansible_user }} {{ ansible_password }}
       args:
         chdir: "{{ playbook_dir }}"
