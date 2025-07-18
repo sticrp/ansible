@@ -1,11 +1,15 @@
-
 ---
-- name: Reiniciar APs
+- name: Rebootar AP Intelbras via expect
   hosts: all
   gather_facts: no
-  become: no
 
   tasks:
-  - name: Rebootar AP via comando direto
-    ansible.builtin.raw: reboot
-    ignore_errors: yes
+    - name: Reboot usando expect
+      ansible.builtin.expect:
+        command: ssh admin@{{ inventory_hostname }}
+        responses:
+          'password:': {{ ansible_pass }}
+          '.*#': "reboot"
+        timeout: 10
+      vars:
+        ansible_connection: local
