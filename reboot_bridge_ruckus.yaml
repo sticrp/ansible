@@ -3,7 +3,10 @@
   gather_facts: no
   vars:
     ansible_ssh_common_args: >
-      -o StrictHostKeyChecking=no
+      -o KexAlgorithms=+diffie-hellman-group1-sha1 
+      -o HostKeyAlgorithms=+ssh-rsa 
+      -o PubkeyAcceptedKeyTypes=+ssh-rsa 
+      -o StrictHostKeyChecking=no 
       -o UserKnownHostsFile=/dev/null
   tasks:
     - name: Reboot via shell com expect
