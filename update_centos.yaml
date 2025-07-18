@@ -1,11 +1,11 @@
----
-- name: Atualizar servidores CentOS
-  hosts:  all
-  #become: yes
+- name: Atualizar servidores CentOS com DNF
+  hosts: all
+  become: yes
   gather_facts: yes
 
   tasks:
-    - name: Atualizar todos os pacotes
-      yum:
+    - name: Atualizar todos os pacotes usando DNF
+      dnf:
         name: '*'
         state: latest
+        update_cache: yes
