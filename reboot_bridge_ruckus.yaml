@@ -8,6 +8,7 @@
       -o PubkeyAcceptedKeyTypes=+ssh-rsa 
       -o StrictHostKeyChecking=no 
       -o UserKnownHostsFile=/dev/null
+ 
   tasks:
     - name: Reboot via shell com expect
       ansible.builtin.expect:
