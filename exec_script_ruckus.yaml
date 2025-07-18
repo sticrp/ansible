@@ -7,4 +7,4 @@
       ansible.builtin.command: >
         python3 reboot_bridge_ruckus.py {{ inventory_hostname }} {{ ansible_user }} {{ ansible_password }}
       args:
-        chdir: "{{ playbook_dir }}"
+        chdir: .
