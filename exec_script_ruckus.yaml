@@ -1,0 +1,10 @@
+- name: Executar script Python reboot_ruckus.py via Ansible
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Executar reboot_ruckus.py
+      ansible.builtin.command: >
+        python3 reboot_ruckus.py {{ inventory_hostname }} {{ ansible_user }} {{ ansible_password }}
+      args:
+        chdir: "{{ playbook_dir }}"
