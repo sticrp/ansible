@@ -1,0 +1,9 @@
+- name: Reboot Bridge Ruckus
+  hosts: all
+  gather_facts: no
+  
+  tasks:
+    - name: Reboot usando comando raw
+      raw: reboot
+      register: reboot_result
+      ignore_errors: yes
