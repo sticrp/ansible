@@ -1,9 +1,16 @@
-- name: Reboot Bridge Ruckus
-  hosts: all
+- name: Reboot Ruckus
+  hosts: ruckus
   gather_facts: no
   
   tasks:
-    - name: Reboot usando comando raw
-      raw: reboot
-      register: reboot_result
+    - name: Reboot via shell com expect
+      ansible.builtin.expect:
+        command: ssh -o StrictHostKeyChecking=no {{ inventory_hostname }}
+        responses:
+          'login:': "{{ ansible_user }}"
+          'password:': "{{ ansible_password }}"
+          '\# ': 'reboot'
+        timeout: 10
+        echo: yes
+      register: result
       ignore_errors: yes
