@@ -1,12 +1,17 @@
 ---
-- name: Reiniciar bridges WIFI
+- name: Rebootar Bridges Wifi
   hosts: all
-  become: yes  # Executar com privilégios de superusuário
+  gather_facts: no
 
   tasks:
-    #- name: /tmp/ansible/ directory exists with 0777 permission
-    #  file: path=/tmp/ansible/ owner=root group=root mode=0777 recurse=no state=directory
-    #  sudo: yes
-  
-    - name: Reiniciar bridges
-      command: reboot
+    - name: Reboot usando expect
+      ansible.builtin.expect:
+        command: ssh admin@{{ inventory_hostname }}
+        responses:
+          'password:': "{{ ansible_password }}"
+          '.*#': "reboot"
+        timeout: 10
+      vars:
+        ansible_connection: local
+      ignore_errors: true
+      failed_when: false
