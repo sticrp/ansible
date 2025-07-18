@@ -1,5 +1,5 @@
 ---
-- name: Reiniciar Access Points UniFi
+- name: Reiniciar Access Points
   hosts: all
   gather_facts: no
   become: no
