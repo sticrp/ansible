@@ -1,7 +1,10 @@
-- name: Reboot Ruckus
+- name: Reboot Ruckus via expect
   hosts: all
   gather_facts: no
-  
+  vars:
+    ansible_ssh_common_args: >
+      -o StrictHostKeyChecking=no
+      -o UserKnownHostsFile=/dev/null
   tasks:
     - name: Reboot via shell com expect
       ansible.builtin.expect:
@@ -14,3 +17,6 @@
         echo: yes
       register: result
       ignore_errors: yes
+
+    - debug:
+        var: result.stdout_lines
