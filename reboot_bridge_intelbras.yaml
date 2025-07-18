@@ -1,0 +1,15 @@
+---
+- name: Reboot AP Intelbras via sshpass
+  ansible.builtin.shell: |
+    sshpass -p '{{ ansible_password }}' ssh \
+      -o KexAlgorithms=+diffie-hellman-group1-sha1 \
+      -o HostKeyAlgorithms=+ssh-rsa \
+      -o PubkeyAcceptedKeyTypes=+ssh-rsa \
+      -o StrictHostKeyChecking=no \
+      -o UserKnownHostsFile=/dev/null \
+      {{ ansible_user }}@{{ inventory_hostname }} 'reboot'
+  args:
+    warn: false
+  register: reboot_result
+  failed_when: false
+  ignore_errors: true
