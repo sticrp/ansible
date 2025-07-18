@@ -7,12 +7,3 @@
       raw: reboot
       register: reboot_result
       ignore_errors: yes
-
-    - name: Verificar resultado
-      debug:
-        msg: >
-          {% if reboot_result.rc == 0 %}
-            Reboot enviado com sucesso
-          {% else %}
-            Falha ao tentar reiniciar
-          {% endif %}
