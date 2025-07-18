@@ -11,12 +11,13 @@
   tasks:
     - name: Reboot via shell com expect
       ansible.builtin.expect:
-        command: ssh -o StrictHostKeyChecking=no {{ inventory_hostname }}
+        command: ssh -tt {{ inventory_hostname }}
         responses:
-          'login:': "{{ ansible_user }}"
+          'Please login:': "{{ ansible_user }}"
           'password:': "{{ ansible_password }}"
-          '\# ': 'reboot'
-        timeout: 10
+          'Password:': "{{ ansible_password }}"
+          '.*#': "reboot"
+        timeout: 15
         echo: yes
       register: result
       ignore_errors: yes
