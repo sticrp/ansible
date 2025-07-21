@@ -12,6 +12,8 @@
           'password :': "{{ ansible_password }}"
           'rkscli:': 'reboot'
         timeout: 10
+        echo: yes
+        strip_prompt: false
       vars:
         ansible_connection: local
       ignore_errors: true
