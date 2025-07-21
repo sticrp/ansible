@@ -2,6 +2,13 @@
 - name: Rebootar Bridge Ruckus
   hosts: all
   gather_facts: no
+  vars:
+    ansible_ssh_common_args: >
+      -o KexAlgorithms=+diffie-hellman-group1-sha1 
+      -o HostKeyAlgorithms=+ssh-rsa 
+      -o PubkeyAcceptedKeyTypes=+ssh-rsa 
+      -o StrictHostKeyChecking=no 
+      -o UserKnownHostsFile=/dev/null
 
   tasks:
     - name: Reboot usando expect
