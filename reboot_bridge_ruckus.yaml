@@ -21,4 +21,6 @@
         timeout: 20
       vars:
         ansible_connection: local
+      ignore_errors: true
+      failed_when: false  
 
