@@ -1,10 +1,17 @@
-- name: Executar script Python reboot_ruckus.py via Ansible
+---
+- name: Rebootar Bridge Ruckus
   hosts: all
   gather_facts: no
 
   tasks:
-    - name: Executar reboot_bridge_ruckus.py
-      ansible.builtin.command: >
-         /opt/semaphore/apps/ansible/11.1.0/venv/bin/python3 reboot_ruckus.py {{ inventory_hostname }} {{ ansible_user }} {{ ansible_password }}
-      args:
-        chdir: "{{ playbook_dir }}"
+    - name: Reboot usando expect
+      ansible.builtin.expect:
+        command: ssh admin@{{ inventory_hostname }}
+        responses:
+          'password:': "{{ ansible_password }}"
+          '.*#': "reboot"
+        timeout: 10
+      vars:
+        ansible_connection: local
+      ignore_errors: true
+      failed_when: false
