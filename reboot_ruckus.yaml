@@ -6,7 +6,7 @@
   tasks:
     - name: Reboot usando expect
       ansible.builtin.expect:
-        command: ssh admin@{{ inventory_hostname }}
+        command: ssh {{ ansible_user }}@{{ inventory_hostname }}
         responses:
           'password:': "{{ ansible_password }}"
           '.*#': "reboot"
