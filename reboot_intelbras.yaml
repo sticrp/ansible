@@ -10,7 +10,7 @@
         responses:
           'password:': "{{ ansible_password }}"
           '.*#': "reboot"
-        timeout: 10
+        timeout: 30
       vars:
         ansible_connection: local
       ignore_errors: false
