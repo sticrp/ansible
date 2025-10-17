@@ -9,7 +9,7 @@
         command: ssh admin@{{ inventory_hostname }}
         responses:
           'password:': "{{ ansible_password }}"
-          '.*#': "reboot"
+          '#\s*$': "reboot\n" 
         timeout: 30
       vars:
         ansible_connection: local
