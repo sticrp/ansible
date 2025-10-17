@@ -2,8 +2,7 @@
 - name: Reboot APs Intelbras via expect
   hosts: all
   gather_facts: no
-  vars:
-    ansible_user: admin             # usuário SSH nos APs
+ 
   tasks:
 
     - name: Reboot usando expect
