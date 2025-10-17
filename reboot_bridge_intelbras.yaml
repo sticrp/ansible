@@ -1,14 +1,19 @@
 ---
-- name: Reboot Bridge Intelbras
+- name: Reboot APs Intelbras via raw
   hosts: all
   gather_facts: no
+  vars:
+    ansible_ssh_common_args: >-
+      -o KexAlgorithms=+diffie-hellman-group1-sha1
+      -o HostKeyAlgorithms=+ssh-rsa
 
   tasks:
-    - name: Reboot via raw
-      raw: reboot
+    - name: Reboot via raw usando sshpass
+      raw: "sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ inventory_hostname }} reboot"
       register: reboot_result
       ignore_errors: yes
 
     - name: Mostrar resultado do reboot
       debug:
         var: reboot_result
+
