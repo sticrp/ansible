@@ -6,12 +6,8 @@
   tasks:
     - name: Reboot usando expect
       ansible.builtin.expect:
-        command: ssh admin@{{ inventory_hostname }}
+        command: /usr/bin/ssh admin@{{ inventory_hostname }}
         responses:
           'password:': "{{ ansible_password }}"
-          '#\s*$': "reboot\n" 
+          '#\s*$': "reboot\n"
         timeout: 30
-      vars:
-        ansible_connection: local
-      ignore_errors: false
-      failed_when: false
