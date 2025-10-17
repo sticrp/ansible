@@ -2,8 +2,13 @@
   hosts: all
   gather_facts: no
   
-  tasks:
-    - name: Reboot usando comando raw
+ tasks:
+
+    - name: Reboot via raw
       raw: reboot
       register: reboot_result
       ignore_errors: yes
+
+    - name: Mostrar resultado do reboot
+      debug:
+        var: reboot_result
