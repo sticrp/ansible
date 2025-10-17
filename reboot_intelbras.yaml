@@ -1,21 +1,25 @@
 ---
-- name: Reboot APs Intelbras via expect
+- name: Rebootar Aps Intelbras
   hosts: all
   gather_facts: no
- 
-  tasks:
+  vars:
+    ansible_ssh_common_args: >
+      -o KexAlgorithms=+diffie-hellman-group1-sha1 
+      -o HostKeyAlgorithms=+ssh-rsa 
+      -o PubkeyAcceptedKeyTypes=+ssh-rsa 
+      -o StrictHostKeyChecking=no 
+      -o UserKnownHostsFile=/dev/null
 
+  tasks:
     - name: Reboot usando expect
       ansible.builtin.expect:
-        command: ssh {{ ansible_user }}@{{ inventory_hostname }}
+        command: ssh -tt {{ inventory_hostname }}
         responses:
-          'password:': "{{ ansible_password }}"
-          '#\s*$': "reboot\n"
-        timeout: 30          # aguarda login e prompt
-      ignore_errors: false
-      failed_when: false
-      register: reboot_result
-
-    - name: Mostrar resultado do reboot
-      debug:
-        var: reboot_result
+          'Please login:': "{{ ansible_user }}"
+          'password :': "{{ ansible_password }}"
+          'rkscli:': 'reboot'
+        timeout: 10
+      vars:
+        ansible_connection: local
+      ignore_errors: true
+      failed_when: false  
