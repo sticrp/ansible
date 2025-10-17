@@ -15,9 +15,8 @@
       ansible.builtin.expect:
         command: ssh -tt {{ inventory_hostname }}
         responses:
-          'Please login:': "{{ ansible_user }}"
           'password :': "{{ ansible_password }}"
-          'rkscli:': 'reboot'
+          '#': 'reboot'
         timeout: 10
       vars:
         ansible_connection: local
