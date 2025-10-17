@@ -1,4 +1,3 @@
----
 - name: Reboot APs Intelbras via raw
   hosts: all
   gather_facts: no
@@ -6,14 +5,11 @@
     ansible_ssh_common_args: >-
       -o KexAlgorithms=+diffie-hellman-group1-sha1
       -o HostKeyAlgorithms=+ssh-rsa
-
   tasks:
-    - name: Reboot via raw usando sshpass
-      raw: "sshpass -p '{{ ansible_password }}' ssh -o StrictHostKeyChecking=no {{ ansible_user }}@{{ inventory_hostname }} reboot"
-      register: reboot_result
+    - name: Reboot via raw
+      raw: reboot
       ignore_errors: yes
 
-    - name: Mostrar resultado do reboot
-      debug:
-        var: reboot_result
-
+    - name: Esperar host voltar
+      wait_for_connection:
+        timeout: 120
