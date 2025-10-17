@@ -1,13 +1,23 @@
 ---
-- name: Rebootar AP Intelbras via expect
+- name: Reboot APs Intelbras via expect
   hosts: all
   gather_facts: no
-
+  vars:
+    ansible_user: admin             # usuário SSH nos APs
+    ansible_password: "{{ password }}"  # senha SSH (pode vir do Vault ou extra_vars)
   tasks:
+
     - name: Reboot usando expect
       ansible.builtin.expect:
-        command: /usr/bin/ssh admin@{{ inventory_hostname }}
+        command: ssh {{ ansible_user }}@{{ inventory_hostname }}
         responses:
           'password:': "{{ ansible_password }}"
           '#\s*$': "reboot\n"
-        timeout: 30
+        timeout: 30          # aguarda login e prompt
+      ignore_errors: false
+      failed_when: false
+      register: reboot_result
+
+    - name: Mostrar resultado do reboot
+      debug:
+        var: reboot_result
