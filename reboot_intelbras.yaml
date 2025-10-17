@@ -13,5 +13,5 @@
         timeout: 10
       vars:
         ansible_connection: local
-      ignore_errors: true
+      ignore_errors: false
       failed_when: false
