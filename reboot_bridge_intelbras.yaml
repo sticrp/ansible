@@ -1,9 +1,9 @@
+---
 - name: Reboot Bridge Intelbras
   hosts: all
   gather_facts: no
-  
- tasks:
 
+  tasks:
     - name: Reboot via raw
       raw: reboot
       register: reboot_result
