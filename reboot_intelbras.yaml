@@ -4,7 +4,6 @@
   gather_facts: no
   vars:
     ansible_user: admin             # usuário SSH nos APs
-    ansible_password: "{{ password }}"  # senha SSH (pode vir do Vault ou extra_vars)
   tasks:
 
     - name: Reboot usando expect
