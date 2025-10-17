@@ -1,4 +1,4 @@
-- name: Reboot APs Intelbras via raw
+- name: Reboot Bridges Intelbras via raw
   hosts: all
   gather_facts: no
   vars:
