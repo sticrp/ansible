@@ -9,7 +9,8 @@
     - name: Reboot via raw
       raw: reboot
       ignore_errors: yes
+      register: reboot_result
 
-    - name: Esperar host voltar
-      wait_for_connection:
-        timeout: 120
+    - name: Mostrar resultado do reboot
+      debug:
+        var: reboot_result
